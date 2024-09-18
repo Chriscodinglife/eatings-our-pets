@@ -10,6 +10,8 @@ django-cors-headers = "*"
 django-environ = "*"
 openai = "*"
 psycopg2 = "*"
+whitenoise = "*"
+gunicorn = "*"
 
 [dev-packages]
 

@@ -10,3 +10,25 @@ None of the content on this site should be taken seriously, and it's meant to hi
 
 Backend is using Django
 Frontend is Vite + React + Typescript
+
+## How To Run Django Backend Locally
+
+Ensure a local postgres server is available to connect to and setup environment variables needed
+Can reference Pipfile for python version
+
+```bash
+pipenv install
+pipenv shell
+cd backend
+python manage.py runserver
+```
+
+## How To Run Vite/React Frontend Locally
+
+```bash
+nodenv install $(cat .node-version)
+nodenv local $(cat .node-version)
+cd frontend
+npm install
+npm run dev
+```
