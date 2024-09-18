@@ -9,6 +9,7 @@ djangorestframework = "*"
 django-cors-headers = "*"
 django-environ = "*"
 openai = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
