@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 dotenv.config();
 
-const target = process.env.VITE_FRONTEND;
+const target = process.env.VITE_BACKEND;
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
