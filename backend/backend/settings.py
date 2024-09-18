@@ -141,3 +141,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
     env('FRONTEND')
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    env('RAILWAY_APP'),
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    env('RAILWAY_APP')
+]
