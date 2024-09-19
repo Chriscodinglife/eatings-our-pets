@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     refreshCounter();
     fetchArticles();
-  });
+  }, []);
 
   const backend = import.meta.env.VITE_BACKEND;
 
