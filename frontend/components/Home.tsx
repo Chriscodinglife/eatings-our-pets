@@ -13,6 +13,7 @@ const Home = () => {
   const [count, setCount] = useState(null);
   const [articles, setArticles] = useState([]);
   const [buttonLoading, setButtonLoading] = useState(true);
+  const [animating, setAnimating] = useState(false);
   const backend = import.meta.env.VITE_BACKEND;
 
   const refreshCounter = useCallback(() => {
@@ -24,15 +25,18 @@ const Home = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.counter);
-        setCount(res.data.counter);
+        setAnimating(true);
+        setTimeout(() => {
+          setCount(res.data.counter);
+          setAnimating(false);
+        }, 200);
         setButtonLoading(false);
       })
       .catch((error) => {
         console.log(error);
         setButtonLoading(false);
       });
-  }, []);
+  }, [backend]);
 
   const handleCounterClick = () => {
     refreshCounter();
@@ -45,11 +49,18 @@ const Home = () => {
         setArticles(res.data);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [backend]);
 
   useEffect(() => {
     refreshCounter();
     fetchArticles();
+
+    const twoMinutes = 120000;
+    const intervalId = setInterval(() => {
+      refreshCounter();
+    }, twoMinutes);
+
+    return () => clearInterval(intervalId);
   }, [refreshCounter, fetchArticles]);
 
   const buttonText = buttonLoading ? "Loading..." : `My pet was eaten!`;
@@ -64,7 +75,13 @@ const Home = () => {
       <div className="d-flex flex-row justify-content-center my-5">
         <div className="m-3 text-center align-content-center">
           <h4>Total pets eaten:</h4>
-          <h4 className="fs-1 fw-bold">{count}</h4>
+          <h4
+            className={`fs-1 fw-bold ${
+              animating ? "opacity-0" : "opacity-100"
+            } transition-opacity`}
+          >
+            {count}
+          </h4>
         </div>
         <img src={spongebob} alt="spongebob" className="w-25" />
       </div>
