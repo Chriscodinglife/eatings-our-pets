@@ -1,6 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
 import spongebob from "../src/assets/spongebob.webp";
+import catSound from "../src/assets/sounds/cat.mp3";
+import dogSound from "../src/assets/sounds/dog.mp3";
 
 interface Article {
   id: number;
@@ -14,7 +16,16 @@ const Home = () => {
   const [articles, setArticles] = useState([]);
   const [buttonLoading, setButtonLoading] = useState(true);
   const [animating, setAnimating] = useState(false);
+  const [rotateImage, setRotateImage] = useState(false);
   const backend = import.meta.env.VITE_BACKEND;
+  const clickCounterRef = useRef(0);
+
+  const playSound = () => {
+    const sounds = [catSound, dogSound];
+    const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+    const audio = new Audio(randomSound);
+    audio.play();
+  };
 
   const refreshCounter = useCallback(() => {
     setButtonLoading(true);
@@ -40,6 +51,14 @@ const Home = () => {
 
   const handleCounterClick = () => {
     refreshCounter();
+
+    clickCounterRef.current += 1;
+    if (clickCounterRef.current === 10) {
+      playSound();
+      clickCounterRef.current = 0; // Reset the ref after playing the sound
+    }
+    setRotateImage(true);
+    setTimeout(() => setRotateImage(false), 1000);
   };
 
   const fetchArticles = useCallback(() => {
@@ -63,10 +82,11 @@ const Home = () => {
     return () => clearInterval(intervalId);
   }, [refreshCounter, fetchArticles]);
 
-  const buttonText = buttonLoading ? "Loading..." : `My pet was eaten!`;
+  const buttonText = buttonLoading ? "Loading..." : "My pet was eaten!";
+
   return (
     <div className="d-flex flex-column my-3 w-75 mx-auto">
-      <div className="text-center ">
+      <div className="text-center">
         <h1>🐱 iMmIgRaNtS aRe EaTiNg OuR pEtS! 🐶</h1>
       </div>
       <div className="text-center">
@@ -83,7 +103,12 @@ const Home = () => {
             {count}
           </h4>
         </div>
-        <img src={spongebob} alt="spongebob" className="w-25" />
+        {/* Add rotate class when rotateImage is true */}
+        <img
+          src={spongebob}
+          alt="spongebob"
+          className={`w-25 ${rotateImage ? "rotate" : ""}`}
+        />
       </div>
       <div className="card p-3 m-3">
         <p className="fs-6">
@@ -117,6 +142,29 @@ const Home = () => {
             ))}
         </ul>
       </div>
+
+      <style>{`
+        @keyframes rotate360 {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        .rotate {
+          animation: rotate360 1s ease-in-out;
+        }
+        .opacity-0 {
+          opacity: 0;
+        }
+        .opacity-100 {
+          opacity: 1;
+        }
+        .transition-opacity {
+          transition: opacity 0.2s;
+        }
+      `}</style>
     </div>
   );
 };
