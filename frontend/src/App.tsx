@@ -5,7 +5,6 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 
 function App() {
-  console.log(import.meta.env.VITE_BACKEND);
   return (
     <Router>
       <Nav />
