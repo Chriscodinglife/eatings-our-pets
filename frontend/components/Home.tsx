@@ -12,6 +12,7 @@ interface Article {
 const Home = () => {
   const [count, setCount] = useState(null);
   const [articles, setArticles] = useState([]);
+  const [buttonLoading, setButtonLoading] = useState(true);
   const backend = import.meta.env.VITE_BACKEND;
 
   const refreshCounter = useCallback(() => {
@@ -24,8 +25,12 @@ const Home = () => {
       .then((res) => {
         console.log(res.data.counter);
         setCount(res.data.counter);
+        setButtonLoading(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        setButtonLoading(false);
+      });
   }, []);
 
   const handleCounterClick = () => {
@@ -46,6 +51,7 @@ const Home = () => {
     fetchArticles();
   }, [refreshCounter, fetchArticles]);
 
+  const buttonText = buttonLoading ? "Loading..." : `My pet was eaten!`;
   return (
     <div className="d-flex flex-column my-3 w-75 mx-auto">
       <div className="text-center ">
@@ -69,7 +75,7 @@ const Home = () => {
           className="text-white bg-danger rounded-1 p-3 border-0"
           onClick={() => handleCounterClick()}
         >
-          My pet was eaten!
+          {buttonText}
         </button>
       </div>
 
