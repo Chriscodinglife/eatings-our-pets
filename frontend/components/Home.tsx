@@ -13,14 +13,16 @@ const Home = () => {
   const [count, setCount] = useState(null);
   const [articles, setArticles] = useState([]);
 
+  const backend = import.meta.env.VITE_BACKEND;
+
   useEffect(() => {
     refreshCounter();
     fetchArticles();
-  }, []);
+  });
 
   const refreshCounter = () => {
     axios
-      .get("/api/counter")
+      .get(backend + "/api/counter")
       .then((res) => {
         console.log(res.data.counter);
         setCount(res.data.counter);
