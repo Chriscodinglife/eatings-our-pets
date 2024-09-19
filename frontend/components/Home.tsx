@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import spongebob from "../src/assets/spongebob.webp";
 
@@ -12,15 +12,9 @@ interface Article {
 const Home = () => {
   const [count, setCount] = useState(null);
   const [articles, setArticles] = useState([]);
-
-  useEffect(() => {
-    refreshCounter();
-    fetchArticles();
-  }, []);
-
   const backend = import.meta.env.VITE_BACKEND;
 
-  const refreshCounter = () => {
+  const refreshCounter = useCallback(() => {
     axios
       .get(`${backend}/api/counter/`, {
         headers: {
@@ -32,20 +26,25 @@ const Home = () => {
         setCount(res.data.counter);
       })
       .catch((error) => console.log(error));
-  };
+  }, []);
 
   const handleCounterClick = () => {
     refreshCounter();
   };
 
-  const fetchArticles = () => {
+  const fetchArticles = useCallback(() => {
     axios
       .get(`${backend}/api/articles/`)
       .then((res) => {
         setArticles(res.data);
       })
       .catch((error) => console.log(error));
-  };
+  }, []);
+
+  useEffect(() => {
+    refreshCounter();
+    fetchArticles();
+  }, [refreshCounter, fetchArticles]);
 
   return (
     <div className="d-flex flex-column my-3 w-75 mx-auto">
