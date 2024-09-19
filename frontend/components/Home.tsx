@@ -16,6 +16,7 @@ const Home = () => {
   const backend = import.meta.env.VITE_BACKEND;
 
   const refreshCounter = useCallback(() => {
+    setButtonLoading(true);
     axios
       .get(`${backend}/api/counter/`, {
         headers: {
