@@ -22,7 +22,11 @@ const Home = () => {
 
   const refreshCounter = () => {
     axios
-      .get(`${backend}/api/counter`)
+      .get(`${backend}/api/counter`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         console.log(res.data.counter);
         setCount(res.data.counter);

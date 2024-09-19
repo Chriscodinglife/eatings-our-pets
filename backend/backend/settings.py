@@ -154,3 +154,7 @@ CSRF_TRUSTED_ORIGINS = [
     env('VITE_FRONTEND'),
     env('LOCAL_FRONTEND')
 ]
+
+CORS_ALLOW_HEADERS = [
+    "content-type"
+]
