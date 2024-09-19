@@ -16,11 +16,13 @@ const Home = () => {
   useEffect(() => {
     refreshCounter();
     fetchArticles();
-  }, []);
+  });
+
+  const backend = import.meta.env.VITE_BACKEND;
 
   const refreshCounter = () => {
     axios
-      .get("/api/counter")
+      .get(`${backend}/api/counter`)
       .then((res) => {
         console.log(res.data.counter);
         setCount(res.data.counter);
@@ -34,7 +36,7 @@ const Home = () => {
 
   const fetchArticles = () => {
     axios
-      .get("/api/articles/")
+      .get(`${backend}/api/articles/`)
       .then((res) => {
         setArticles(res.data);
       })
