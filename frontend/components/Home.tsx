@@ -135,7 +135,7 @@ const Home = () => {
                 <p className="text-start text-text-secondary mb-3 fs-6">
                   {new Date(article.created_at).toLocaleDateString()}
                 </p>
-                <h5 className="pt-2 text-secondary">{article.title}</h5>
+                <h5 className="pt-2">{article.title}</h5>
               </li>
             ))}
         </ul>
