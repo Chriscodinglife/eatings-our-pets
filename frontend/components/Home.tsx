@@ -103,7 +103,6 @@ const Home = () => {
             {count}
           </h4>
         </div>
-        {/* Add rotate class when rotateImage is true */}
         <img
           src={spongebob}
           alt="spongebob"
@@ -125,7 +124,7 @@ const Home = () => {
       <div className="text-start my-4">
         <h3>Latest News</h3>
         <h5 className="text-secondary">
-          Found By Our AI Bot Scouring The Web*
+          {`Found By Our AI Bot Scouring The Web: (Completely Fake News)`}
         </h5>
         <ul>
           {[...articles]
@@ -136,8 +135,7 @@ const Home = () => {
                 <p className="text-start text-text-secondary mb-3 fs-6">
                   {new Date(article.created_at).toLocaleDateString()}
                 </p>
-                <h5>{article.title}</h5>
-                <p className="pt-2 text-secondary">{article.description}</p>
+                <h5 className="pt-2 text-secondary">{article.title}</h5>
               </li>
             ))}
         </ul>
