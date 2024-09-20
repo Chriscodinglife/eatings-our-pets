@@ -129,7 +129,7 @@ const Home = () => {
         <ul>
           {[...articles]
             .reverse()
-            .slice(0, 6)
+            .slice(0, 4)
             .map((article: Article) => (
               <li key={article.id} className="p-3 mx-auto">
                 <p className="text-start text-text-secondary mb-3 fs-6">
